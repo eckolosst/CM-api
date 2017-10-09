@@ -1,0 +1,20 @@
+{
+  "name": "CM-api",
+  "version": "1.0.0",
+  "description": "API REST con NodeJS y Express correspondiente a CMWeb",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniela Manriquezzzz, Pérez Lucas",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.5"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
