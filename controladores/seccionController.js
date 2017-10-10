@@ -19,6 +19,14 @@ function getSecciones (req, res) {
     })
 }
 
+function getTitulos (req, res){
+    Seccion.find({}, (err, array) => {
+        if(err) return res.status(500).send({message: 'Error al realizar la operación'})
+        if(!array) return res.status(404).send({message: 'No existen secciones'})
+        res.status(200).send({titulos: array})
+    }).select(tituloBtn: 1)
+}
+
 function saveSeccion(req, res){
     let seccion = new Seccion()
     seccion.titulo = req.body.titulo
@@ -29,8 +37,6 @@ function saveSeccion(req, res){
         res.status(200).send({seccion: eltoStored})
     })
 }
-
-/*Xq a veces es req.params y a veces req. body???*/
 
 function updateSeccion (req, res) {
     let seccionId = req.params.seccionId
@@ -55,6 +61,7 @@ function deleteSeccion (req, res) {
 module.exports = {
     getSeccion,
     getSecciones,
+    getTitulos,
     saveSeccion,
     updateSeccion,
     deleteSeccion

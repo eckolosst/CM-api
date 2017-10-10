@@ -7,7 +7,7 @@ const app = require('./app')
 const port = process.env.PORT || 3002
 
 // mongoose.connect('mongodb://username:password@host:port/database?options...');
-mongoose.connect('mongodb://localhost:27017/gallery', (err, res) => {
+mongoose.connect('mongodb://localhost:27017/cmdb', (err, res) => {
   if(err){
     return console.log(`Error al conectar la base de datos: ${err}`)
   }

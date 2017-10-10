@@ -39,8 +39,9 @@ app.delete('/api/seccion/:seccionId', seccionCtrl.deleteSeccion)
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
                         /*      PETICIONES PARA APP    */
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-/* app.get('/api/busqueda/:arreglo/:secciones', aficheCtrl.getBusqueda)
-Todavia nada. xq las secciones se recuperaran de 1 en vez, cuando se clickee
+app.get('/api/main/', seccionCtrl.getTitulos)
+
+/*Todavia nada. xq las secciones se recuperaran de 1 en vez, cuando se clickee
 sobre ellas en el menu lateral.
 Pero OJO! En ese caso se deberian recuperar los nombres de las secciones para
 mostrar en el menu.*/
