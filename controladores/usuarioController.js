@@ -26,7 +26,7 @@ function login (req, res){
         if(err) return res.status(500).send({message: 'Error al realizar la operación'})
         if(!array) return res.status(404).send({message: 'No existen usuarios'})
         res.status(200).send({pass: elto})
-    }).select(pass: 1)
+    }).select({pass: 1})
 }
 
 function saveUsuario(req, res){

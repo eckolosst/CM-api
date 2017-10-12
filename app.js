@@ -10,8 +10,11 @@ const usuarioCtrl = require('./controladores/usuarioController')
 const seccionCtrl = require('./controladores/seccionController')
 
 // middlewares
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({extended: false}))
+// app.use(bodyParser.json({limit: '500kb'}))
+// app.use(bodyParser.raw({limit: '500kb'}))
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({extended: false, limit: '50mb'}));
 /** Seting up server to accept cross-originn browser requests */
 app.use(function(req, res, next) { //allow cross origin requests
     res.header("Access-Control-Allow-Origin", "*");
@@ -39,7 +42,7 @@ app.delete('/api/seccion/:seccionId', seccionCtrl.deleteSeccion)
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
                         /*      PETICIONES PARA APP    */
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-app.get('/api/main/', seccionCtrl.getTitulos)
+app.get('/api/titulos/', seccionCtrl.getTitulos)
 
 /*Todavia nada. xq las secciones se recuperaran de 1 en vez, cuando se clickee
 sobre ellas en el menu lateral.
