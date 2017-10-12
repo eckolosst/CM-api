@@ -24,7 +24,7 @@ function getTitulos (req, res){
         if(err) return res.status(500).send({message: 'Error al realizar la operación'})
         if(!array) return res.status(404).send({message: 'No existen secciones'})
         res.status(200).send({titulos: array})
-    }).select(tituloBtn: 1)
+    }).select({tituloBtn: 1, _id:1})
 }
 
 function saveSeccion(req, res){
