@@ -1,5 +1,7 @@
 'use strict'
 
+var bcrypt = require('bcrypt-nodejs');//si causa error cambiar bcrypt-nodejs por bcrypt
+
 const Usuario = require('../modelos/usuario')
 
 function getUsuario (req, res) {
@@ -29,14 +31,31 @@ function login (req, res){
 
 function saveUsuario(req, res){
     let usuario = new Usuario()
-    usuario.nombre = req.body.nombre
-    usuario.apellido = req.body.apellido
-    usuario.email = req.body.email
-    usuario.pass = req.body.pass
-    usuario.save((err, eltoStored) => {
-        if(err) res.status(500).send({message: 'Error al guardar el usuario' + usuario.nombre + ' ' + usuario.apellido})
-        res.status(200).send({usuario: eltoStored})
-    })
+    var params = req.body;
+    if(params.pass && params.nombre && params.apellido && params.email){
+        usuario.nombre = params.nombre
+        usuario.apellido = params.apellido
+        usuario.email = params.email
+        Usuario.findOne({ email: usuario.email.toLowerCase()}, (err, userFind) => {//Verifico si ya se registraron con ese mail
+            if(err) {
+                res.status(500).send({message: 'Error al comprobar el usuario'})
+            }else{
+                if(!userFind){//Si no se encontro usuario en la bd procedo a almacenarlo cifrando el pass
+                    bcrypt.hash(params.pass, null, null, function(err, hash){
+                        usuario.pass = hash
+                        usuario.save((err, eltoStored) => {
+                            if(err) res.status(500).send({message: 'Error al guardar el usuario' + usuario.nombre + ' ' + usuario.apellido})
+                            res.status(200).send({usuario: eltoStored})
+                        })
+                    })
+                }else {//Si se encontro un usuario registrado con ese mail emito error
+                    res.status(200).send({message:'El usuario no puede registrarse: mail utilizado'})
+                }
+            }
+        })
+    }else {
+        res.status(200).send({message:'Introduce los datos correctamente'})
+    }
 }
 
 function updateUsuario (req, res) {
