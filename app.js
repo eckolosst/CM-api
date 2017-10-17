@@ -9,6 +9,8 @@ const app = express()
 const usuarioCtrl = require('./controladores/usuarioController')
 const seccionCtrl = require('./controladores/seccionController')
 
+var md_auth = require('./middlewares/autenticacion')
+
 // middlewares
 // app.use(bodyParser.urlencoded({extended: false}))
 // app.use(bodyParser.json({limit: '500kb'}))
@@ -26,10 +28,17 @@ app.use(function(req, res, next) { //allow cross origin requests
                         /*      PETICIONES PARA ABM     */
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 // Usuario
+/*En cada una de las rutas que quiera proteger con token solo tengo que agregar
+el middleware md_auth como se ve en el siguiente ejemplo:
+app.get('/api/usuario/',md_auth.ensureAuth, usuarioCtrl.getUsuarios)
+entonces cuando se quiera ingresar a esa ruta, se debe pasar en la peticion el
+token, en un atriburo llamado 'Authorization'
+*/
 app.get('/api/usuario/', usuarioCtrl.getUsuarios)
 app.get('/api/usuario/:usuarioId', usuarioCtrl.getUsuario)
-app.post('/api/usuario/', usuarioCtrl.saveUsuario)
-app.put('/api/usuario/:usuarioId', usuarioCtrl.updateUsuario)
+app.post('/api/registro/', usuarioCtrl.saveUsuario)
+app.post('/api/usuarioLog/', usuarioCtrl.login)
+app.put('/api/update-usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.updateUsuario)
 app.delete('/api/usuario/:usuarioId', usuarioCtrl.deleteUsuario)
 // Seccion
 app.get('/api/seccion/', seccionCtrl.getSecciones)

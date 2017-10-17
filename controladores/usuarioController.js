@@ -4,6 +4,8 @@ var bcrypt = require('bcrypt-nodejs');//si causa error cambiar bcrypt-nodejs por
 
 const Usuario = require('../modelos/usuario')
 
+var jwt = require('../services/jwt')
+
 function getUsuario (req, res) {
     let usuarioId = req.params.usuarioId
     Usuario.findById(usuarioId, (err, elto) => {
@@ -22,11 +24,28 @@ function getUsuarios (req, res) {
 }
 
 function login (req, res){
-    Usuario.find({}, (err,arra) => {
-        if(err) return res.status(500).send({message: 'Error al realizar la operación'})
-        if(!array) return res.status(404).send({message: 'No existen usuarios'})
-        res.status(200).send({pass: elto})
-    }).select({pass: 1})
+    var params = req.body
+    var email = params.email
+    var pass = params.pass
+    Usuario.findOne({email: email.toLowerCase()}, (err, userFind) => {
+        if(err) {res.status(500).send({message: 'Error al comprobar el usuario'})}
+        else{
+            if(userFind){
+                bcrypt.compare(pass, userFind.pass, (err, check) =>{
+                    if(check){
+                        if(params.gettoken){//se devuelte el token
+                            res.status(200).send({token: jwt.createToken(userFind)})
+                        }else{//se devuelven datos del usuario. OJO con esto puede que deba cambiar
+                            res.status(200).send({userFind})
+                        }
+                    }
+                    else{res.status(404).send({message:'El usuario no ha podido loguearse: Password incorrecto'})}
+                })
+            }else {
+                res.status(404).send({message:'El usuario no ha podido loguearse: mail no encontrado'})
+            }
+        }
+    })
 }
 
 function saveUsuario(req, res){
@@ -36,7 +55,7 @@ function saveUsuario(req, res){
         usuario.nombre = params.nombre
         usuario.apellido = params.apellido
         usuario.email = params.email
-        Usuario.findOne({ email: usuario.email.toLowerCase()}, (err, userFind) => {//Verifico si ya se registraron con ese mail
+        Usuario.findOne({email: usuario.email.toLowerCase()}, (err, userFind) => {//Verifico si ya se registraron con ese mail
             if(err) {
                 res.status(500).send({message: 'Error al comprobar el usuario'})
             }else{
@@ -61,7 +80,10 @@ function saveUsuario(req, res){
 function updateUsuario (req, res) {
     let usuarioId = req.params.usuarioId
     let update = req.body
-    Usuario.findByIdAndUpdate(usuarioId, update, (err, eltoUpdated) => {
+    if(usuarioId != req.usuario.sub){
+        return res.status(500).send({message: 'No tiene permiso para modificar el usuario'})
+    }
+    Usuario.findByIdAndUpdate(usuarioId, update, {new:true}, (err, eltoUpdated) => {
         if(err) res.status(500).send({message: `Error al actualizar el usuario: ${err}`})
         res.status(200).send({usuario: eltoUpdated})
     })
@@ -81,6 +103,7 @@ function deleteUsuario (req, res) {
 module.exports = {
     getUsuario,
     getUsuarios,
+    login,
     saveUsuario,
     updateUsuario,
     deleteUsuario
