@@ -12,15 +12,13 @@ const seccionCtrl = require('./controladores/seccionController')
 var md_auth = require('./middlewares/autenticacion')
 
 // middlewares
-// app.use(bodyParser.urlencoded({extended: false}))
-// app.use(bodyParser.json({limit: '500kb'}))
-// app.use(bodyParser.raw({limit: '500kb'}))
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({extended: false, limit: '50mb'}));
-/** Seting up server to accept cross-originn browser requests */
-app.use(function(req, res, next) { //allow cross origin requests
+app.use((req, res, next) =>{ //allow cross origin requests
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY, Access-Control-Allow-Method");
+    res.header("Access-Control-Allow-Methods","GET,POST,OPTIONS,PUT,DELETE")
+    res.header("Allow","GET,POST,OPTIONS,PUT,DELETE")
     next();
 });
 

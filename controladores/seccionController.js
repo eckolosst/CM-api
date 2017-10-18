@@ -20,11 +20,11 @@ function getSecciones (req, res) {
 }
 
 function getTitulos (req, res){
-    Seccion.find({}, (err, array) => {
-        if(err) return res.status(500).send({message: 'Error al realizar la operación'})
-        if(!array) return res.status(404).send({message: 'No existen secciones'})
-        res.status(200).send({titulos: array})
-    }).select({tituloBtn: 1, _id:1})
+        Seccion.find({}, (err, array) => {
+            if(err) return res.status(500).send({message: 'Error al realizar la operación'})
+            if(!array) return res.status(404).send({message: 'No existen secciones'})
+            res.status(200).send({titulos: array})
+        }).select({tituloBtn: 1, _id:1}).sort('titulo')
 }
 
 function saveSeccion(req, res){
@@ -42,8 +42,17 @@ function updateSeccion (req, res) {
     let seccionId = req.params.seccionId
     let update = req.body
     Seccion.findByIdAndUpdate(seccionId, update, (err, eltoUpdated) => {
-        if(err) res.status(500).send({message: `Error al actualizar la seccion: ${err}`})
-        res.status(200).send({seccion: eltoUpdated})
+        if(err) {
+            res.status(500).send({message: `Error al actualizar la seccion: ${err}`})
+        }
+        else{
+            if(!eltoUpdated){
+                res.status(404).send({message:"No se han enviado los datos"})
+            }
+            else{
+                res.status(200).send({seccion: eltoUpdated})
+            }
+        }
     })
 }
 

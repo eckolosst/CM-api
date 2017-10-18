@@ -6,9 +6,7 @@ const Schema = mongoose.Schema
 const SeccionSchema = Schema({
     titulo: {type: String, require:true},
     contenido: {type: String},
-    tituloBtn: {type: String, require:true, index:true, unique:true},
-    /*Analizar la posibilidad de almacenar en la bd las imagenes que contiene
-    cada seccion*/
+    tituloBtn: {type: String, require:true, index:true, unique:true}
 })
 
 module.exports = mongoose.model('Seccion', SeccionSchema)
