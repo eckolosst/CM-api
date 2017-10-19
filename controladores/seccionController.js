@@ -58,14 +58,21 @@ function updateSeccion (req, res) {
 
 function deleteSeccion (req, res) {
     let seccionId = req.params.seccionId
-    Seccion.findById(seccionId, (err, elto) => {
-        if(err) res.status(500).send({message: `Error al borrar la seccion: ${err}`})
-        elto.remove(err => {
-            if(err) res.status(500).send({message: `Error al borrar la seccion: ${err}`})
-            res.status(200).send({message: 'La seccion fue borrada con éxito'})
-        })
+    Seccion.findByIdAndRemove(seccionId, (err, elto) => {
+        if(err){
+             res.status(500).send({message: `Error al borrar la seccion: ${err}`})
+        }
+        else{
+            if(!elto){
+                res.status(404).send({message: "Error en la Petición"})
+            }
+            else{
+                res.status(200).send({seccion: elto});
+            }
+        }
     })
 }
+
 
 module.exports = {
     getSeccion,
