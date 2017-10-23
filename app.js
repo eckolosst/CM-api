@@ -51,10 +51,5 @@ app.delete('/api/seccion/:seccionId', seccionCtrl.deleteSeccion)
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 app.get('/api/titulos/', seccionCtrl.getTitulos)
 
-/*Todavia nada. xq las secciones se recuperaran de 1 en vez, cuando se clickee
-sobre ellas en el menu lateral.
-Pero OJO! En ese caso se deberian recuperar los nombres de las secciones para
-mostrar en el menu.*/
-
 
 module.exports = app
