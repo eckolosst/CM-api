@@ -32,24 +32,24 @@ app.get('/api/usuario/',md_auth.ensureAuth, usuarioCtrl.getUsuarios)
 entonces cuando se quiera ingresar a esa ruta, se debe pasar en la peticion el
 token, en un atriburo llamado 'Authorization'
 */
-app.get('/api/usuario/', usuarioCtrl.getUsuarios)
-app.get('/api/usuario/:usuarioId', usuarioCtrl.getUsuario)
-app.post('/api/registro/', usuarioCtrl.saveUsuario)
-app.post('/api/usuarioLog/', usuarioCtrl.login)
+app.get('/api/usuario/', md_auth.ensureAuth, usuarioCtrl.getUsuarios)
+app.get('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.getUsuario)
+app.post('/api/registro/', md_auth.ensureAuth, usuarioCtrl.saveUsuario)
+app.post('/api/usuarioLog/', md_auth.ensureAuth, usuarioCtrl.login)
 app.put('/api/update-usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.updateUsuario)
-app.delete('/api/usuario/:usuarioId', usuarioCtrl.deleteUsuario)
+app.delete('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.deleteUsuario)
 // Seccion
-app.get('/api/seccion/', seccionCtrl.getSecciones)
-app.get('/api/seccion/:seccionId', seccionCtrl.getSeccion)
-app.post('/api/seccion/', seccionCtrl.saveSeccion)
-app.put('/api/seccion/:seccionId', seccionCtrl.updateSeccion)
-app.delete('/api/seccion/:seccionId', seccionCtrl.deleteSeccion)
+app.get('/api/seccion/', md_auth.ensureAuth, seccionCtrl.getSecciones)
+app.get('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.getSeccion)
+app.post('/api/seccion/', md_auth.ensureAuth, seccionCtrl.saveSeccion)
+app.put('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.updateSeccion)
+app.delete('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.deleteSeccion)
 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
                         /*      PETICIONES PARA APP    */
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-app.get('/api/titulos/', seccionCtrl.getTitulos)
+app.get('/api/titulos/', md_auth.ensureAuth, seccionCtrl.getTitulos)
 
 
 module.exports = app
