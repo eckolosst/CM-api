@@ -36,11 +36,7 @@ function login (req, res){
                         if(params.gettoken){//se devuelte el token
                             res.status(200).send({token: jwt.createToken(userFind)})
                         }else{//se devuelven datos del usuario. OJO con esto puede que deba cambiar
-<<<<<<< HEAD
                             userFind.pass = "ggwp"
-=======
-                            userFind.pass="ggwp"
->>>>>>> c9b3437ebdc43dc1d784378836824e0a74de93fa
                             res.status(200).send(userFind)
                         }
                     }
