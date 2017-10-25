@@ -36,7 +36,8 @@ function login (req, res){
                         if(params.gettoken){//se devuelte el token
                             res.status(200).send({token: jwt.createToken(userFind)})
                         }else{//se devuelven datos del usuario. OJO con esto puede que deba cambiar
-                            res.status(200).send({userFind})
+                            userFind.pass="ggwp"
+                            res.status(200).send(userFind)
                         }
                     }
                     else{res.status(404).send({message:'El usuario no ha podido loguearse: Password incorrecto'})}
