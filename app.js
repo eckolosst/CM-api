@@ -32,21 +32,14 @@ app.get('/api/usuario/',md_auth.ensureAuth, usuarioCtrl.getUsuarios)
 entonces cuando se quiera ingresar a esa ruta, se debe pasar en la peticion el
 token, en un atriburo llamado 'Authorization'
 */
-<<<<<<< HEAD
+
 app.get('/api/usuario/', md_auth.ensureAuth, usuarioCtrl.getUsuarios)
 app.get('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.getUsuario)
 app.post('/api/registro/', md_auth.ensureAuth, usuarioCtrl.saveUsuario)
 app.post('/api/usuarioLog/', usuarioCtrl.login)
 app.put('/api/update-usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.updateUsuario)
 app.delete('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.deleteUsuario)
-=======
-app.get('/api/usuario/',  usuarioCtrl.getUsuarios)
-app.get('/api/usuario/:usuarioId',  usuarioCtrl.getUsuario)
-app.post('/api/registro/',  usuarioCtrl.saveUsuario)
-app.post('/api/usuarioLog/',  usuarioCtrl.login)
-app.put('/api/update-usuario/:usuarioId',  usuarioCtrl.updateUsuario)
-app.delete('/api/usuario/:usuarioId',  usuarioCtrl.deleteUsuario)
->>>>>>> 47e07ce6b1fead55955dd0efb92f7b2854b2d80b
+
 // Seccion
 app.get('/api/seccion/',  seccionCtrl.getSecciones)
 app.get('/api/seccion/:seccionId',  seccionCtrl.getSeccion)
