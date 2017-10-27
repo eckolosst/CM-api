@@ -41,11 +41,11 @@ app.put('/api/update-usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.update
 app.delete('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.deleteUsuario)
 
 // Seccion
-app.get('/api/seccion/',  seccionCtrl.getSecciones)
-app.get('/api/seccion/:seccionId',  seccionCtrl.getSeccion)
-app.post('/api/seccion/',  seccionCtrl.saveSeccion)
-app.put('/api/seccion/:seccionId',  seccionCtrl.updateSeccion)
-app.delete('/api/seccion/:seccionId',  seccionCtrl.deleteSeccion)
+app.get('/api/seccion/', md_auth.ensureAuth, seccionCtrl.getSecciones)
+app.get('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.getSeccion)
+app.post('/api/seccion/', md_auth.ensureAuth, seccionCtrl.saveSeccion)
+app.put('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.updateSeccion)
+app.delete('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.deleteSeccion)
 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
