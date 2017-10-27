@@ -4,7 +4,7 @@
 const mongoose = require('mongoose')
 const app = require('./app')
 // define al puerto como variable de entorno o por defecto
-const port = process.env.PORT || 3002
+const port = process.env.PORT || 3003
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/cmdb',{useMongoClient: true})
