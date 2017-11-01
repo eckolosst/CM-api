@@ -51,7 +51,7 @@ app.delete('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.deleteSecc
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
                         /*      PETICIONES PARA APP    */
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-app.get('/api/titulos/',  seccionCtrl.getTitulos)
+app.get('/api/titulos/', md_auth.ensureAuth, seccionCtrl.getTitulos)
 
 
 module.exports = app
