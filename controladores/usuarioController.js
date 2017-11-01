@@ -69,12 +69,12 @@ function saveUsuario(req, res){
                         })
                     })
                 }else {//Si se encontro un usuario registrado con ese mail emito error
-                    res.status(200).send({message:'El usuario no puede registrarse: mail utilizado'})
+                    res.status(500).send({message:'El usuario no puede registrarse: mail utilizado'})
                 }
             }
         })
     }else {
-        res.status(200).send({message:'Introduce los datos correctamente'})
+        res.status(500).send({message:'Introduce los datos correctamente'})
     }
 }
 
