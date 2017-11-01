@@ -35,7 +35,7 @@ token, en un atriburo llamado 'Authorization'
 
 app.get('/api/usuario/', md_auth.ensureAuth, usuarioCtrl.getUsuarios)
 app.get('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.getUsuario)
-app.post('/api/registro/', md_auth.ensureAuth, usuarioCtrl.saveUsuario)
+app.post('/api/registro/', usuarioCtrl.saveUsuario)
 app.post('/api/usuarioLog/', usuarioCtrl.login)
 app.put('/api/update-usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.updateUsuario)
 app.delete('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.deleteUsuario)
