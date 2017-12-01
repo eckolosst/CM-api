@@ -9,6 +9,8 @@ const app = express()
 const usuarioCtrl = require('./controladores/usuarioController')
 const seccionCtrl = require('./controladores/seccionController')
 
+var emailCtrl = require('./controladores/mailController')
+
 var md_auth = require('./middlewares/autenticacion')
 
 // middlewares
@@ -53,5 +55,9 @@ app.delete('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.deleteSecc
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 app.get('/api/titulos/', md_auth.ensureAuth, seccionCtrl.getTitulos)
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+                     /*      PETICIONES PARA APP MOVIL   */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+app.post('/api/sendMail', emailCtrl.sendMail)
 
 module.exports = app
