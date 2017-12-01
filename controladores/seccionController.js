@@ -10,21 +10,21 @@ function getSeccion (req, res) {
         res.status(200).send({seccion: elto})
     })
 }
-
+//api/seccion
 function getSecciones (req, res) {
     Seccion.find({}, (err, array) => {
         if(err) return res.status(500).send({message: 'Error al realizar la operación'})
         if(!array) return res.status(404).send({message: 'No existen secciones'})
         res.status(200).send({secciones: array})
-    })
+    }).sort('orden')
 }
-
+//api/titulos
 function getTitulos (req, res){
-        Seccion.find({}, (err, array) => {
-            if(err) return res.status(500).send({message: 'Error al realizar la operación'})
-            if(!array) return res.status(404).send({message: 'No existen secciones'})
-            res.status(200).send({titulos: array})
-        }).select({tituloBtn: 1, _id:1}).sort('titulo')
+    Seccion.find({}, (err, array) => {
+        if(err) return res.status(500).send({message: 'Error al realizar la operación'})
+        if(!array) return res.status(404).send({message: 'No existen secciones'})
+        res.status(200).send({titulos: array})
+    }).select({tituloBtn: 1, _id:1}).sort('orden')
 }
 
 function saveSeccion(req, res){
@@ -32,6 +32,7 @@ function saveSeccion(req, res){
     seccion.titulo = req.body.titulo
     seccion.contenido = req.body.contenido
     seccion.tituloBtn = req.body.tituloBtn
+    seccion.orden = req.body.orden
     seccion.save((err, eltoStored) => {
         if(err) res.status(500).send({message: 'Error al guardar la seccion' + seccion.titulo})
         res.status(200).send({seccion: eltoStored})
