@@ -3,10 +3,11 @@
 var nodemailer = require('nodemailer');
 
 function sendMail (req, res){
-  var emisor = req.emisor
-  var destinatario = req.destinatario
-  var asunto = req.asunto
-  var texto = req.text
+  var params = req.body
+  var emisor = params.email
+  var destinatario = "daniela.manrique1422@gmail.com"
+  var asunto = "Comentario de "+ params.name + " enviado desde la app"
+  var texto = "Nombre: " + params.name + "\n\nEmail: " + params.email + "\n\nComentario: " params.text
 
   var transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -29,7 +30,7 @@ function sendMail (req, res){
       res.status(500).send({message:err.message});
     }else{
       console.log('Mail enviado');
-      res.status(200);
+      res.status(200).send({message:'Mail enviado'});
     }
   })
 }
