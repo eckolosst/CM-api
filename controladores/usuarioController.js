@@ -16,7 +16,8 @@ function getUsuario (req, res) {
 }
 
 function getUsuarios (req, res) {
-    Usuario.find({}, (err, array) => {
+    let arreglo = ['admin@email.com', 'app-client@email.com'];
+    Usuario.find({email: {$nin: arreglo}}, (err, array) => {
         if(err) return res.status(500).send({message: 'Error al realizar la operación'})
         if(!array) return res.status(404).send({message: 'No existen usuarios'})
         res.status(200).send({usuarios: array})
@@ -90,6 +91,45 @@ function updateUsuario (req, res) {
     })
 }
 
+function updateUser (req, res) {
+    let usuarioId = req.params.usuarioId
+    let update = req.body
+    if (update.pass){
+      bcrypt.hash(update.pass, null, null, function(err, hash){
+          update.pass = hash
+          Usuario.findByIdAndUpdate(usuarioId, update, (err, eltoUpdated) => {
+              if(err) {
+                  res.status(500).send({message: `Error al actualizar la usuario: ${err}`})
+              }
+              else{
+                  if(!eltoUpdated){
+                      res.status(404).send({message:"No se han enviado los datos"})
+                  }
+                  else{
+                      res.status(200).send({usuario: eltoUpdated})
+                  }
+              }
+          })
+      })
+    }
+    else{
+      Usuario.findByIdAndUpdate(usuarioId, update, (err, eltoUpdated) => {
+          if(err) {
+              res.status(500).send({message: `Error al actualizar la usuario: ${err}`})
+          }
+          else{
+              if(!eltoUpdated){
+                  res.status(404).send({message:"No se han enviado los datos"})
+              }
+              else{
+                  res.status(200).send({usuario: eltoUpdated})
+              }
+          }
+      })
+    }
+
+}
+
 function deleteUsuario (req, res) {
     let usuarioId = req.params.usuarioId
     Usuario.findById(usuarioId, (err, elto) => {
@@ -107,5 +147,6 @@ module.exports = {
     login,
     saveUsuario,
     updateUsuario,
-    deleteUsuario
+    deleteUsuario,
+    updateUser
 }

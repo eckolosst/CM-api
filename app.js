@@ -37,7 +37,8 @@ app.get('/api/usuario/', md_auth.ensureAuth, usuarioCtrl.getUsuarios)
 app.get('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.getUsuario)
 app.post('/api/registro/', usuarioCtrl.saveUsuario)
 app.post('/api/usuarioLog/', usuarioCtrl.login)
-app.put('/api/update-usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.updateUsuario)
+// app.put('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.updateUsuario)
+app.put('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.updateUser)
 app.delete('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.deleteUsuario)
 
 // Seccion
@@ -47,6 +48,7 @@ app.post('/api/seccion/', md_auth.ensureAuth, seccionCtrl.saveSeccion)
 app.put('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.updateSeccion)
 app.delete('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.deleteSeccion)
 
+app.get('/api/secciones/', seccionCtrl.getSecciones)
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
                         /*      PETICIONES PARA APP    */
