@@ -5,6 +5,7 @@ var nodemailer = require('nodemailer');
 function sendMail (req, res){
   var params = req.body
   var emisor = params.email
+
   var destinatario = "api.ciudadmujer@gmail.com"
   var asunto = "Comentario de "+ params.name + " enviado desde la app"
   var texto = "Nombre: " + params.name + "\nEmail: " + params.email +
