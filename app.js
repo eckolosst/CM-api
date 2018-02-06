@@ -39,7 +39,6 @@ app.get('/api/usuario/', md_auth.ensureAuth, usuarioCtrl.getUsuarios)
 app.get('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.getUsuario)
 app.post('/api/registro/', usuarioCtrl.saveUsuario)
 app.post('/api/usuarioLog/', usuarioCtrl.login)
-// app.put('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.updateUsuario)
 app.put('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.updateUser)
 app.delete('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.deleteUsuario)
 
@@ -61,5 +60,6 @@ app.get('/api/titulos/', md_auth.ensureAuth, seccionCtrl.getTitulos)
                      /*      PETICIONES PARA APP MOVIL   */
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 app.post('/api/sendMail', emailCtrl.sendMail)
+app.post('/api/sendMailPic', emailCtrl.sendMailPic)
 
 module.exports = app

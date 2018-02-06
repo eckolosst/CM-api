@@ -79,18 +79,6 @@ function saveUsuario(req, res){
     }
 }
 
-function updateUsuario (req, res) {
-    let usuarioId = req.params.usuarioId
-    let update = req.body
-    if(usuarioId != req.usuario.sub){
-        return res.status(500).send({message: 'No tiene permiso para modificar el usuario'})
-    }
-    Usuario.findByIdAndUpdate(usuarioId, update, {new:true}, (err, eltoUpdated) => {
-        if(err) res.status(500).send({message: `Error al actualizar el usuario: ${err}`})
-        res.status(200).send({usuario: eltoUpdated})
-    })
-}
-
 function updateUser (req, res) {
     let usuarioId = req.params.usuarioId
     let update = req.body
