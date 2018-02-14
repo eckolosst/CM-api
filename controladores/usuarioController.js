@@ -134,7 +134,7 @@ module.exports = {
     getUsuarios,
     login,
     saveUsuario,
-    updateUsuario,
+    updateUser,
     deleteUsuario,
     updateUser
 }

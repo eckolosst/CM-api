@@ -60,6 +60,5 @@ app.get('/api/titulos/', md_auth.ensureAuth, seccionCtrl.getTitulos)
                      /*      PETICIONES PARA APP MOVIL   */
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 app.post('/api/sendMail', emailCtrl.sendMail)
-app.post('/api/sendMailPic', emailCtrl.sendMailPic)
 
 module.exports = app

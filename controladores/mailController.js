@@ -5,47 +5,37 @@ var nodemailer = require('nodemailer');
 function sendMail (req, res){
   var params = req.body
   var emisor = params.email
+  var pic = params.picture
+  var audio = params.audio
   var destinatario = "api.ciudadmujer@gmail.com"
   var asunto = "Comentario de "+ params.name + " enviado desde la app"
   var texto = "Nombre: " + params.name + "\n\nEmail: " + params.email + "\n\nComentario: " + params.text
-
   var mailOptions = {
     from: emisor,
     to: destinatario,
     subject: asunto,
-    text: texto
+    text: texto,
+    attachments: []
   }
-  enviarMail(mailOptions)
-}
-
-function sendMailPic(req, res){
-  var params = req.body
-  var destinatario = "api.ciudadmujer@gmail.com"
-  var asunto = "Fotografia enviada desde la app"
-  // var texto = "Nombre: " + params.name + "\n\nEmail: " + params.email + "\n\nComentario: " params.text
-
-  var img = params.contenido //Fotofrafia tomada
-  /*Revisar
-  https://stackoverflow.com/questions/24165410/
-  nodemailer-send-base64-data-uri-as-attachment-how
-  */
-
-  var mailOptions = {
-    from: null,
-    to: destinatario,
-    subject: asunto,
-    attachments: [
+  if(pic){
+    mailOptions.attachments.push(
       {
         filename: 'picture.jpeg',
-        content: img.split("base64,")[1],
+        content: pic,
         encoding: 'base64'
       }
-    ]
+    )
   }
-  enviarMail(mailOptions)
-}
+  if(audio){
+    mailOptions.attachments.push(
+      {
+        filename: 'audio.jpeg',
+        content: audio,
+        encoding: 'base64'
+      }
+    )
+  }
 
-function enviarMail(mailOptions){
   var transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -66,6 +56,5 @@ function enviarMail(mailOptions){
 }
 
 module.exports = {
-  sendMail,
-  sendMailPic
+  sendMail
 }
