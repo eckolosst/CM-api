@@ -129,6 +129,36 @@ function deleteUsuario (req, res) {
     })
 }
 
+function updateSeguimiento(req, res){
+  console.log("Entro a la peticion")
+  var userId = req.params.id;
+  var update = {seguimiento: req.body};
+
+  Alumno.findByIdAndUpdate(userId, update, (err, userEdit) =>{
+    if(err){
+      res.status(500).send({message: "Error al obtener usuario"})
+    }
+    else{
+      if(!userEdit){
+        res.status(404).send({message: "No se ha podido iniciar el seguimiento"});
+      }
+      else{
+        res.status(200).send({alumno: userEdit});
+      }
+    }
+  });
+}
+
+function getSeguimiento (req, res) {
+    let usuarioId = req.params.usuarioId
+    Usuario.findById(usuarioId, (err, usuario) => {
+        if(err) return res.status(500).send({message: 'Error al realizar la operación'})
+        if(!usuario) return res.status(404).send({message: 'El usuario no existe'})
+        res.status(200).send({usuario: usuario})
+    }).select({seguimiento:1})
+}
+
+
 module.exports = {
     getUsuario,
     getUsuarios,
@@ -136,5 +166,7 @@ module.exports = {
     saveUsuario,
     updateUser,
     deleteUsuario,
-    updateUser
+    updateUser,
+    updateSeguimiento,
+    getSeguimiento
 }
