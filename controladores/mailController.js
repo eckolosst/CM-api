@@ -5,8 +5,6 @@ var nodemailer = require('nodemailer');
 function sendMail (req, res){
   var params = req.body
   var emisor = params.email
-  var pic = params.picture
-  var audio = params.audio
   var destinatario = "api.ciudadmujer@gmail.com"
   var asunto = "Comentario de "+ params.name + " enviado desde la app"
   var texto = "Nombre: " + params.name + "\n\nEmail: " + params.email + "\n\nComentario: " + params.text
@@ -17,6 +15,7 @@ function sendMail (req, res){
     text: texto,
     attachments: []
   }
+  var pic = params.picture
   if(pic){
     mailOptions.attachments.push(
       {
@@ -26,10 +25,13 @@ function sendMail (req, res){
       }
     )
   }
-  if(audio){
+  var voiceAudio = params.audio
+  if(voiceAudio){
+    voiceAudio = voiceAudio.split("data:image/*;charset=utf-8;base64,")[1];
+    console.log(voiceAudio);
     mailOptions.attachments.push(
       {
-        filename: 'audio.jpeg',
+        filename: 'voiceAudio.mp3',
         content: audio,
         encoding: 'base64'
       }
