@@ -28,11 +28,11 @@ function sendMail (req, res){
   var voiceAudio = params.audio
   if(voiceAudio){
     voiceAudio = voiceAudio.split("data:image/*;charset=utf-8;base64,")[1];
-    console.log(voiceAudio);
+    // console.log(voiceAudio);
     mailOptions.attachments.push(
       {
         filename: 'voiceAudio.mp3',
-        content: audio,
+        content: voiceAudio,
         encoding: 'base64'
       }
     )
