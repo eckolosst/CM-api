@@ -41,8 +41,8 @@ app.post('/api/registro/', usuarioCtrl.saveUsuario)
 app.post('/api/usuarioLog/', usuarioCtrl.login)
 app.put('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.updateUser)
 app.delete('/api/usuario/:usuarioId', md_auth.ensureAuth, usuarioCtrl.deleteUsuario)
-app.put('/api/seguimiento/:usuarioId', md_auth.ensureAuth, usuarioCtrl.updateSeguimiento)
-app.get('/api/seguimiento/:usuarioId', md_auth.ensureAuth, usuarioCtrl.getSeguimiento)
+app.put('/api/seguimiento/:usuarioId',  usuarioCtrl.updateSeguimiento)
+app.get('/api/seguimiento/:usuarioId',  usuarioCtrl.getSeguimiento)
 
 // Seccion
 app.get('/api/seccion/', md_auth.ensureAuth, seccionCtrl.getSecciones)
