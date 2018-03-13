@@ -4,16 +4,13 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const UsuarioSchema = Schema({
-    email: {type: String, require: true},
-    pass: {type: String, require: true},
+    email: {type: String},
+    pass: {type: String},
     nombre: {type: String},
     apellido: {type: String},
     // Se agregan los datos de seguimiento como datos sueltos para ahorrar tiempo y desarrollo (verificación de atomicidad)
-    origenLat: { type: Number},
-    origenLng: { type: Number},
-    destinoLat: { type: Number},
-    destinoLng: { type: Number},
-    camino: []
+    // 0: origen, 1: destino
+    seguimiento: []
 })
 
 module.exports = mongoose.model('Usuario', UsuarioSchema)

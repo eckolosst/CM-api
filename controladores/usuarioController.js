@@ -82,6 +82,7 @@ function saveUsuario(req, res){
 function updateUser (req, res) {
     let usuarioId = req.params.usuarioId
     let update = req.body
+    console.log("Datos: ",update)
     if (update.pass){
       bcrypt.hash(update.pass, null, null, function(err, hash){
           update.pass = hash
@@ -132,7 +133,7 @@ function deleteUsuario (req, res) {
 function updateSeguimiento(req, res){
   var userId = req.params.id;
   var update = req.body;
-  console.log(req.body)
+  console.log(update)
   Usuario.findByIdAndUpdate(userId, update, (err, userEdit) =>{
     if(err){
       res.status(500).send({message: "Error al obtener usuario"})
