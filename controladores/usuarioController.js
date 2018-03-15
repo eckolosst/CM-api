@@ -131,11 +131,12 @@ function deleteUsuario (req, res) {
 }
 
 function updateSeguimiento(req, res){
-  var userId = req.params.id;
+  var userId = req.params.usuarioId;
   var update = req.body;
-  console.log(update)
-  Usuario.findByIdAndUpdate(userId, update, (err, userEdit) =>{
+  console.log(update, userId)
+  Usuario.findOneAndUpdate({_id:userId}, update, (err, userEdit) =>{
     if(err){
+      console.log("Error usuario",userEdit)
       res.status(500).send({message: "Error al obtener usuario"})
     }
     else{
@@ -144,6 +145,7 @@ function updateSeguimiento(req, res){
         res.status(404).send({message: "No se ha podido modificar el seguimiento"});
       }
       else{
+        console.log("modifico usuario ", userEdit)
         res.status(200).send({usuario: userEdit});
       }
     }
@@ -156,7 +158,7 @@ function getSeguimiento (req, res) {
         if(err) return res.status(500).send({message: 'Error al realizar la operación'})
         if(!usuario) return res.status(404).send({message: 'El usuario no existe'})
         res.status(200).send({usuario: usuario})
-    })
+    }).select({seguimiento:1})
 }
 
 
