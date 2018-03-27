@@ -57,6 +57,7 @@ function saveUsuario(req, res){
         usuario.nombre = params.nombre
         usuario.apellido = params.apellido
         usuario.email = params.email
+        usuario.rol = params.rol
         Usuario.findOne({email: usuario.email.toLowerCase()}, (err, userFind) => {//Verifico si ya se registraron con ese mail
             if(err) {
                 res.status(500).send({message: 'Error al comprobar el usuario'})

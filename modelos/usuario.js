@@ -8,6 +8,7 @@ const UsuarioSchema = Schema({
     pass: {type: String},
     nombre: {type: String},
     apellido: {type: String},
+    rol: {type: String},
     // Se agregan los datos de seguimiento como datos sueltos para ahorrar tiempo y desarrollo (verificación de atomicidad)
     // 0: origen, 1: destino
     seguimiento: []
