@@ -15,9 +15,10 @@ function getUsuario (req, res) {
     })
 }
 
+// Solo se utiliza desde la WEB!!!!
 function getUsuarios (req, res) {
     let arreglo = ['admin@email.com', 'app-client@email.com'];
-    Usuario.find({email: {$nin: arreglo}}, (err, array) => {
+    Usuario.find({email: {$nin: arreglo},rol:"admin"}, (err, array) => {
         if(err) return res.status(500).send({message: 'Error al realizar la operación'})
         if(!array) return res.status(404).send({message: 'No existen usuarios'})
         res.status(200).send({usuarios: array})
@@ -25,6 +26,7 @@ function getUsuarios (req, res) {
 }
 
 function login (req, res){
+    var type = req.params.type
     var params = req.body
     var email = params.email
     var pass = params.pass
@@ -32,17 +34,22 @@ function login (req, res){
         if(err) {res.status(500).send({message: 'Error al comprobar el usuario'})}
         else{
             if(userFind){
-                bcrypt.compare(pass, userFind.pass, (err, check) =>{
-                    if(check){
-                        if(params.gettoken){//se devuelte el token
-                            res.status(200).send({token: jwt.createToken(userFind)})
-                        }else{//se devuelven datos del usuario. OJO con esto puede que deba cambiar
-                            userFind.pass = "ggwp"
-                            res.status(200).send(userFind)
-                        }
-                    }
-                    else{res.status(404).send({message:'El usuario no ha podido loguearse: Password incorrecto'})}
-                })
+                if(type == "web" && userFind.rol == 'user'){
+                  res.status(505).send({message:'El usuario no ha podido loguearse: Ingreso Denegado'})
+                }
+                else{
+                  bcrypt.compare(pass, userFind.pass, (err, check) =>{
+                      if(check){
+                          if(params.gettoken){//se devuelte el token
+                              res.status(200).send({token: jwt.createToken(userFind)})
+                          }else{//se devuelven datos del usuario. OJO con esto puede que deba cambiar
+                              userFind.pass = "ggwp"
+                              res.status(200).send(userFind)
+                          }
+                      }
+                      else{res.status(404).send({message:'El usuario no ha podido loguearse: Password incorrecto'})}
+                  })
+                }
             }else {
                 res.status(404).send({message:'El usuario no ha podido loguearse: mail no encontrado'})
             }
@@ -83,7 +90,6 @@ function saveUsuario(req, res){
 function updateUser (req, res) {
     let usuarioId = req.params.usuarioId
     let update = req.body
-    console.log("Datos: ",update)
     if (update.pass){
       bcrypt.hash(update.pass, null, null, function(err, hash){
           update.pass = hash
