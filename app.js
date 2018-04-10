@@ -51,7 +51,7 @@ app.post('/api/seccion/', md_auth.ensureAuth, seccionCtrl.saveSeccion)
 app.put('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.updateSeccion)
 app.delete('/api/seccion/:seccionId', md_auth.ensureAuth, seccionCtrl.deleteSeccion)
 
-app.get('/api/secciones/', seccionCtrl.getSecciones)
+app.get('/api/secciones/:fecha', seccionCtrl.getSecciones)
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
                         /*      PETICIONES PARA APP    */
